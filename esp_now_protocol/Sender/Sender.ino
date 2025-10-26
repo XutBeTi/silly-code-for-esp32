@@ -20,7 +20,7 @@ void OnDataSent(const esp_now_send_info_t *info, esp_now_send_status_t status) {
 }
 
 void setup() {
-   Serial.begin(115200);
+  Serial.begin(115200);
 
   WiFi.mode(WIFI_STA);    // Thiết lập ESP ở chế độ Station (bắt buộc cho ESP-NOW)
   WiFi.disconnect();      // Ngắt kết nối Wi-Fi hiện tại để giải phóng tài nguyên
