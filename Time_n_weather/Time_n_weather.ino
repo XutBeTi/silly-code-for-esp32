@@ -8,7 +8,7 @@
 
 #define button 0
 
-LiquidCrystal_I2C lcd(0x27, 16, 2); 
+LiquidCrystal_I2C lcd(0x27, 20, 04); 
 WiFiUDP ntpUDP;
 NTPClient timeClient(ntpUDP, "pool.ntp.org", 7 * 3600);
 
@@ -175,7 +175,7 @@ void loop() {
 
   if (!index_of_field){
      
-    lcd.setCursor(1, 0);
+    lcd.setCursor(3, 0);
     lcd.print("Time: ");
     lcd.print(timeClient.getFormattedTime());
   }
@@ -191,7 +191,7 @@ void loop() {
 
         if (WiFi.status() == WL_CONNECTED) {
           lcd.print(weatherDescription);
-          lcd.setCursor(10, 1);
+          lcd.setCursor(12, 1);
           lcd.print(temperature, 1);
           lcd.write(0xDF);
           lcd.print("C");
