@@ -1,26 +1,42 @@
-#include <WiFi.h>
-#include <WiFiManager.h> // https://github.com/tzapu/WiFiManager
+#if defined(ESP32)
+  #include <WiFi.h>
+#elif defined(ESP8266)
+  #include <ESP8266WiFi.h>
+#endif
+
+#include <WiFiManager.h> // Thư viện này tự nhận diện chip bên trong
 
 void setup() {
   Serial.begin(115200);
-  Serial.println("Khoi dong...");
+  delay(1000); // Đợi Serial ổn định
+  Serial.println("\n--- He thong bat dau khoi dong ---");
 
-  WiFiManager wifiManager;
+  // Khởi tạo WiFiManager
+  WiFiManager wm;
 
-  // Xóa cấu hình WiFi cũ (tùy chọn, chỉ dùng để test)
-  wifiManager.resetSettings();//neu duoc kich hoat moi lan khoi dong se yeu cau config lai thay vi tu ket noi lai
+  /* * LƯU Ý: Dòng resetSettings() bên dưới sẽ xóa sạch WiFi đã lưu mỗi khi khởi động.
+   * Chỉ nên mở comment (bỏ //) khi bạn muốn test quá trình cấu hình lại từ đầu.
+   */
+  // wm.resetSettings();
 
-  // Tạo portal nếu chưa có WiFi
-  if (!wifiManager.autoConnect("ESP_Config_AP", "12345678")) {
-    Serial.println("Ket noi that bai, reset ESP...");
+  // Thiết lập thời gian chờ (timeout) cho Portal 
+  // Nếu sau 3 phút không có ai cấu hình, ESP sẽ tự thoát Portal để chạy code tiếp theo hoặc restart
+  wm.setConfigPortalTimeout(180); 
+
+  // Cố gắng kết nối với WiFi đã lưu, nếu không thấy sẽ mở Access Point tên "ESP_Config_AP"
+  // Mật khẩu AP là "12345678"
+  if (!wm.autoConnect("ESP_Config_AP", "12345678")) {
+    Serial.println("❌ Khong ket noi duoc va qua thoi gian cho (Timeout).");
     delay(3000);
-    ESP.restart();
+    ESP.restart(); // Khởi động lại để thử lại
   }
 
-  Serial.println("Da ket noi WiFi thanh cong!");
+  // Nếu chạy đến đây nghĩa là đã kết nối thành công
+  Serial.println("\n✅ DA KET NOI WIFI THANH CONG!");
+  Serial.print("Dia chi IP cua ESP: ");
   Serial.println(WiFi.localIP());
 }
 
 void loop() {
-  // code chinh o day
+  // Code chính của bạn chạy ở đây
 }

@@ -48,7 +48,7 @@ NimBLEAdvertisementData getOAdvertisementData() {
 
 void loop() {
   
-  if (digitalRead(0)==LOW){
+  //if (digitalRead(0)==LOW){
     delay(40);
     NimBLEAdvertisementData advertisementData = getOAdvertisementData();
     pAdvertising->setAdvertisementData(advertisementData);
@@ -56,5 +56,5 @@ void loop() {
     delay(20);
     pAdvertising->stop();
 
-  }
+  //}
 }
