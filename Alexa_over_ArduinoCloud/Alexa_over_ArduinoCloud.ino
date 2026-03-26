@@ -53,9 +53,5 @@ void loop() {
 }
 
 void onSwitchChange() {
-  if (Switch) {
-    digitalWrite(OUTPUT_PIN, HIGH);
-  } else {
-    digitalWrite(OUTPUT_PIN, LOW);
-  }
+  Switch ? digitalWrite(OUTPUT_PIN,LOW) : digitalWrite(OUTPUT_PIN,HIGH);
 }
